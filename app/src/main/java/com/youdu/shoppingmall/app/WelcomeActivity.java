@@ -1,4 +1,4 @@
-package com.youdu.shoppingmall.activity;
+package com.youdu.shoppingmall.app;
 
 import android.content.Intent;
 import android.os.Bundle;
