@@ -23,17 +23,12 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-
     @Bind(R.id.frameLayout)
     FrameLayout frameLayout;
-
     @Bind(R.id.rg_main)
     RadioGroup rgMain;
-    /**
-     * 装多个Fragment的实例集合
-     */
-    private ArrayList<BaseFragment> fragments;
 
+    private ArrayList<BaseFragment> fragments;
     private int position = 0;
     /**
      * 缓存的Fragemnt或者上次显示的Fragment
@@ -46,11 +41,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //ButterKnife和当前Activity绑定
         ButterKnife.bind(this);
-        /**
-         * 初始化Fragment
-         */
+
         initFragment();
-        //设置RadioGroup的监听
         initListener();
     }
 
@@ -79,13 +71,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
-                //根据位置取不同的Fragment
                 BaseFragment baseFragment = getFragment(position);
-
-                /**
-                 * 第一参数：上次显示的Fragment
-                 * 第二参数：当前正要显示的Fragment
-                 */
                 switchFragment(tempFragemnt, baseFragment);
 
             }
@@ -98,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     private void initFragment() {
         FragmentManager fm = getSupportFragmentManager();
         tempFragemnt = new HomeFragment();
-        fm.beginTransaction().add(R.id.frameLayout,tempFragemnt).commit();
+        fm.beginTransaction().add(R.id.frameLayout, tempFragemnt).commit();
 
         fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
@@ -129,14 +115,11 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 //判断nextFragment是否添加
                 if (!nextFragment.isAdded()) {
-                    //隐藏当前Fragment
                     if (fromFragment != null) {
                         transaction.hide(fromFragment);
                     }
-                    //添加Fragment
                     transaction.add(R.id.frameLayout, nextFragment).commit();
                 } else {
-                    //隐藏当前Fragment
                     if (fromFragment != null) {
                         transaction.hide(fromFragment);
                     }
