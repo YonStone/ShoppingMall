@@ -31,9 +31,10 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<BaseFragment> fragments;
     private int position = 0;
     /**
-     * 缓存的Fragemnt或者上次显示的Fragment
+     * 缓存的Fragment或者上次显示的Fragment
      */
-    private Fragment tempFragemnt;
+    private Fragment tempFragment;
+    private FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 BaseFragment baseFragment = getFragment(position);
-                switchFragment(tempFragemnt, baseFragment);
+                switchFragment(tempFragment, baseFragment);
 
             }
         });
@@ -82,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
      * 添加的时候要按照顺序
      */
     private void initFragment() {
-        FragmentManager fm = getSupportFragmentManager();
-        tempFragemnt = new HomeFragment();
-        fm.beginTransaction().add(R.id.frameLayout, tempFragemnt).commit();
+        fm = getSupportFragmentManager();
+        tempFragment = new HomeFragment();
+        fm.beginTransaction().add(R.id.frameLayout, tempFragment).commit();
 
         fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
@@ -109,10 +110,10 @@ public class MainActivity extends AppCompatActivity {
      * @param nextFragment
      */
     private void switchFragment(Fragment fromFragment, BaseFragment nextFragment) {
-        if (tempFragemnt != nextFragment) {
-            tempFragemnt = nextFragment;
+        if (tempFragment != nextFragment) {
+            tempFragment = nextFragment;
             if (nextFragment != null) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                FragmentTransaction transaction = fm.beginTransaction();
                 //判断nextFragment是否添加
                 if (!nextFragment.isAdded()) {
                     if (fromFragment != null) {
