@@ -1,5 +1,7 @@
 package com.youdu.shoppingmall.home.fragment;
 
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.Toast;
 
 import com.youdu.shoppingmall.R;
 import com.youdu.shoppingmall.base.BaseFragment;
+import com.youdu.shoppingmall.home.adapter.HomeRecyclerAdapter;
 import com.youdu.shoppingmall.home.bean.ResultBeanData;
 import com.youdu.shoppingmall.network.http.RequestCenter;
 import com.youdu.yonstone_sdk.okhttp.listener.DisposeDataListener;
@@ -35,6 +38,7 @@ public class HomeFragment extends BaseFragment {
     ImageButton ibTop;
 
     private ResultBeanData.ResultBean resultBean;
+    private HomeRecyclerAdapter adapter;
 
     @Override
     protected View initView() {
@@ -51,9 +55,19 @@ public class HomeFragment extends BaseFragment {
             public void onSuccess(Object responseObj) {
                 Log.e(TAG, "onSuccess: " + responseObj.toString());
                 resultBean = ((ResultBeanData) responseObj).getResult();
-                Toast.makeText(mContext, "" + resultBean.getHot_info().get(0).getName(), Toast
-                        .LENGTH_SHORT).show();
-                ;
+//
+//                Toast.makeText(mContext, "" + resultBean.getHot_info().get(0).getName(), Toast
+//                        .LENGTH_SHORT).show();
+
+
+                if (resultBean != null) {
+//                    adapter = new HomeRecyclerAdapter(mContext, resultBean);
+//                    rvHome.setAdapter(adapter);
+//                    rvHome.setLayoutManager(new LinearLayoutManager(getActivity()));
+//                    GridLayoutManager manager = new GridLayoutManager(getActivity(), 1);
+                } else {
+
+                }
             }
 
             @Override
