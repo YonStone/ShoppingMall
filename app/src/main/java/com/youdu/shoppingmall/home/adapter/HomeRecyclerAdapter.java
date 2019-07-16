@@ -89,7 +89,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
         if (getItemViewType(i) == BANNER) {
             BannerViewHolder bannerHolder = (BannerViewHolder) holder;
-//            bannerHolder.setData(resultBean.getBanner_info());
+            bannerHolder.setData(resultBean.getBanner_info());
         }
     }
 
@@ -136,11 +136,11 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
             this.resultBean = resultBean;
         }
 
-//        public void setData(final List<ResultBean.BannerInfoBean> bannerInfo) {
-//            List<String> imageUris = new ArrayList<>();
-//            for (int i = 0; i < resultBean.getBanner_info().size(); i++) {
-//                imageUris.add(resultBean.getBanner_info().get(i).getImage());
-//            }
+        public void setData(final List<ResultBean.BannerInfoBean> bannerInfo) {
+            List<String> imageUris = new ArrayList<>();
+            for (int i = 0; i < resultBean.getBanner_info().size(); i++) {
+                imageUris.add(resultBean.getBanner_info().get(i).getImage());
+            }
 
 //            banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
 //            // 设置类似手风琴动画
@@ -152,7 +152,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
 //                    mImageLoader.displayImage(view, HttpConstants.Base_URl_IMAGE + url);
 //                }
 //            });
-            // 设置点击事件
+//             设置点击事件
 //            banner.setOnBannerClickListener(new OnBannerClickListener()) {
 //                @Override
 //                public void OnBannerClick(int position) {
@@ -178,8 +178,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
 ////                        GoodsBean goodsBean = new GoodsBean(name, cover_price, image, product_id);
 //                    }
 //                }
-//
 //            }
-//        }
+
+        }
     }
 }

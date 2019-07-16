@@ -61,9 +61,8 @@ public class HomeFragment extends BaseFragment {
 
 
                 if (resultBean != null) {
-//                    adapter = new HomeRecyclerAdapter(mContext, resultBean);
-//                    rvHome.setAdapter(adapter);
-//                    rvHome.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    adapter = new HomeRecyclerAdapter(mContext, resultBean);
+                    rvHome.setAdapter(adapter);
 //                    GridLayoutManager manager = new GridLayoutManager(getActivity(), 1);
                 } else {
 
