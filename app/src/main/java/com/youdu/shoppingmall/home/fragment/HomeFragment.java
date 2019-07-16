@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 import com.youdu.shoppingmall.R;
 import com.youdu.shoppingmall.base.BaseFragment;
+import com.youdu.shoppingmall.home.bean.ResultBeanData;
 import com.youdu.shoppingmall.network.http.RequestCenter;
-import com.youdu.yonstone_sdk.okhttp.https.HttpsUtils;
 import com.youdu.yonstone_sdk.okhttp.listener.DisposeDataListener;
 
 import butterknife.Bind;
@@ -34,6 +34,8 @@ public class HomeFragment extends BaseFragment {
     @Bind(R.id.ib_top)
     ImageButton ibTop;
 
+    private ResultBeanData.ResultBean resultBean;
+
     @Override
     protected View initView() {
         View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_home, null);
@@ -44,11 +46,14 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initData() {
         super.initData();
-        RequestCenter.requestRecommendData(null, new DisposeDataListener() {
+        RequestCenter.requestRecommendData(ResultBeanData.class, new DisposeDataListener() {
             @Override
             public void onSuccess(Object responseObj) {
                 Log.e(TAG, "onSuccess: " + responseObj.toString());
-                Toast.makeText(mContext, responseObj.toString(), Toast.LENGTH_SHORT).show();
+                resultBean = ((ResultBeanData) responseObj).getResult();
+                Toast.makeText(mContext, "" + resultBean.getHot_info().get(0).getName(), Toast
+                        .LENGTH_SHORT).show();
+                ;
             }
 
             @Override
