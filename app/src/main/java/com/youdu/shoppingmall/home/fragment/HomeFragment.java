@@ -1,6 +1,7 @@
 package com.youdu.shoppingmall.home.fragment;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -9,6 +10,9 @@ import android.widget.Toast;
 
 import com.youdu.shoppingmall.R;
 import com.youdu.shoppingmall.base.BaseFragment;
+import com.youdu.shoppingmall.network.http.RequestCenter;
+import com.youdu.yonstone_sdk.okhttp.https.HttpsUtils;
+import com.youdu.yonstone_sdk.okhttp.listener.DisposeDataListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,6 +44,19 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initData() {
         super.initData();
+        RequestCenter.requestRecommendData(null, new DisposeDataListener() {
+            @Override
+            public void onSuccess(Object responseObj) {
+                Log.e(TAG, "onSuccess: " + responseObj.toString());
+                Toast.makeText(mContext, responseObj.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Object reasonObj) {
+                Toast.makeText(mContext, "失败", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "onFailure: " + reasonObj.toString());
+            }
+        });
     }
 
     @Override
