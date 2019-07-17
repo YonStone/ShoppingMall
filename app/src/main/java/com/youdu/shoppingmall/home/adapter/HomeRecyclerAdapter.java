@@ -113,6 +113,9 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
         } else if (i == SECKILL) {
             View view = mLayoutInflater.inflate(R.layout.item_seckill, null);
             return new SeckillHolder(view);
+        } else if (i == RECOMMEND) {
+            View view = mLayoutInflater.inflate(R.layout.item_recommend, null);
+            return new RecommendHolder(view);
         } else {
             View itemView = mLayoutInflater.inflate(R.layout.itme_banner, null);
             return new BannerViewHolder(itemView, resultBean);
@@ -133,6 +136,9 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
         } else if (getItemViewType(i) == SECKILL) {
             SeckillHolder seckillHolder = (SeckillHolder) holder;
             seckillHolder.setData(resultBean.getSeckill_info());
+        } else if (getItemViewType(i) == RECOMMEND) {
+            RecommendHolder recommendHolder = (RecommendHolder) holder;
+            recommendHolder.setData(resultBean.getRecommend_info());
         }
     }
 
@@ -174,6 +180,32 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
         return 6;
     }
 
+    class RecommendHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.tv_more_recommend)
+        TextView tvMoreRecommend;
+        @Bind(R.id.gv_recommend)
+        GridView gvRecommend;
+
+        RecommendHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+
+        public void setData(List<ResultBean.RecommendInfoBean> data) {
+            RecommendAdapter adapter = new RecommendAdapter(mContext, data);
+            gvRecommend.setAdapter(adapter);
+            gvRecommend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Toast.makeText(mContext, "" + i, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    /**
+     * 倒计时
+     */
     private boolean isFirst = true;
     private int dt;
     private TextView tvTime;
@@ -195,6 +227,9 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
         }
     };
 
+    /**
+     * 秒杀holder
+     */
     class SeckillHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.tv_time_seckill)
         TextView tvTimeSeckill;
