@@ -3,6 +3,7 @@
     package="com.youdu.shoppingmall">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".app.MyApplication"
         android:allowBackup="true"
@@ -21,6 +22,10 @@
             android:name=".app.MainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".app.GoodsInfoActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
     </application>
 
