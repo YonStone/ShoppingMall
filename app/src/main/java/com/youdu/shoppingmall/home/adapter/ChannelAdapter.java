@@ -53,7 +53,7 @@ public class ChannelAdapter extends BaseAdapter {
     public View getView(int i, View convertView, ViewGroup viewGroup) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = View.inflate(mContext, R.layout.item_channel, null);
+            convertView = View.inflate(mContext, R.layout.item_channel_grid, null);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {

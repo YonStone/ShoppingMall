@@ -86,13 +86,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         if (i == BANNER) {
-            View itemView = mLayoutInflater.inflate(R.layout.itme_home_banner, null);
+            View itemView = mLayoutInflater.inflate(R.layout.itme_banner, null);
             return new BannerViewHolder(itemView, resultBean);
         } else if (i == CHANNEL) {
-            View itemView = mLayoutInflater.inflate(R.layout.item_home_channel, null);
+            View itemView = mLayoutInflater.inflate(R.layout.item_channel, null);
             return new ChanelViewHolder(itemView);
         } else {
-            View itemView = mLayoutInflater.inflate(R.layout.itme_home_banner, null);
+            View itemView = mLayoutInflater.inflate(R.layout.itme_banner, null);
             return new BannerViewHolder(itemView, resultBean);
         }
     }
