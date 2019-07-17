@@ -1,7 +1,6 @@
 package com.youdu.shoppingmall.home.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -20,6 +19,7 @@ import android.widget.Toast;
 
 import com.youdu.shoppingmall.R;
 import com.youdu.shoppingmall.app.GoodsInfoActivity;
+import com.youdu.shoppingmall.home.bean.GoodsBean;
 import com.youdu.shoppingmall.network.http.HttpConstants;
 import com.youdu.yonstone_sdk.imageloader.ImageLoaderManager;
 import com.youth.banner.Banner;
@@ -46,7 +46,6 @@ import static com.youdu.shoppingmall.home.bean.ResultBeanData.ResultBean;
  * @description
  */
 public class HomeRecyclerAdapter extends RecyclerView.Adapter {
-    public static final String GOODS_BEAN = "goods_bean";
     /**
      * 上下文
      */
@@ -100,9 +99,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
     /**
      * 启动商品信息列表
      */
-    private void startGoodsInfoActivity() {
-        Intent intent = new Intent(mContext, GoodsInfoActivity.class);
-        mContext.startActivity(intent);
+    private void startGoodsInfoActivity(GoodsBean bean) {
+        mContext.startActivity(GoodsInfoActivity.actionView(mContext, bean));
     }
 
     @NonNull
@@ -208,7 +206,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
             gvHot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    startGoodsInfoActivity();
+                    String cover_price = data.get(i).getCover_price();
+                    String name = data.get(i).getName();
+                    String figure = data.get(i).getFigure();
+                    String product_id = data.get(i).getProduct_id();
+                    GoodsBean goodsBean = new GoodsBean(name, cover_price, figure, product_id);
+
+                    startGoodsInfoActivity(goodsBean);
                 }
             });
         }
@@ -225,13 +229,19 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
             ButterKnife.bind(this, view);
         }
 
-        public void setData(List<ResultBean.RecommendInfoBean> data) {
+        public void setData(final List<ResultBean.RecommendInfoBean> data) {
             RecommendAdapter adapter = new RecommendAdapter(mContext, data);
             gvRecommend.setAdapter(adapter);
             gvRecommend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    startGoodsInfoActivity();
+                    String cover_price = data.get(i).getCover_price();
+                    String name = data.get(i).getName();
+                    String figure = data.get(i).getFigure();
+                    String product_id = data.get(i).getProduct_id();
+                    GoodsBean goodsBean = new GoodsBean(name, cover_price, figure, product_id);
+
+                    startGoodsInfoActivity(goodsBean);
                 }
             });
         }
@@ -295,7 +305,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
             adapter.setOnSeckillRecyclerView(new SeckillAdapter.OnSeckillRecyclerView() {
                 @Override
                 public void onItemClick(int position) {
-                    startGoodsInfoActivity();
+                    ResultBean.SeckillInfoBean.ListBean listBean = data.getList().get(position);
+                    String name = listBean.getName();
+                    String cover_price = listBean.getCover_price();
+                    String figure = listBean.getFigure();
+                    String product_id = listBean.getProduct_id();
+                    GoodsBean goodsBean = new GoodsBean(name, cover_price, figure, product_id);
+                    startGoodsInfoActivity(goodsBean);
                 }
             });
         }
@@ -337,7 +353,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            startGoodsInfoActivity();
+                            //TODO 跳转到webView
                         }
                     });
                     return view;
@@ -401,7 +417,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
             banner.setOnBannerClickListener(new OnBannerClickListener() {
                 @Override
                 public void OnBannerClick(int position) {
-                    startGoodsInfoActivity();
+                    //TODO 跳转到webView
                 }
             });
         }

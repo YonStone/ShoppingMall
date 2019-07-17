@@ -1,5 +1,7 @@
 package com.youdu.shoppingmall.app;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,7 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.youdu.shoppingmall.R;
+import com.youdu.shoppingmall.home.bean.GoodsBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -58,14 +62,27 @@ public class GoodsInfoActivity extends AppCompatActivity {
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
 
+    public static final String GOODS_BEAN = "goods_bean";
 
-//    private List<GoodsBean> goodsBeans;
-//    private GoodsBean goods_bean;
+    //    private List<GoodsBean> goodsBeans;
+    private GoodsBean goodsBean;
+
+    public static Intent actionView(Context context, GoodsBean bean) {
+        Intent intent = new Intent(context, GoodsInfoActivity.class);
+        intent.putExtra(GOODS_BEAN, bean);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_info);
         ButterKnife.bind(this);
+        goodsBean = (GoodsBean) getIntent().getSerializableExtra(GOODS_BEAN);
+        if (goodsBean != null) {
+            Gson gson = new Gson();
+            Toast.makeText(this, "" + gson.toJson(goodsBean), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @OnClick({R.id.ib_good_info_back, R.id.ib_good_info_more, R.id.tv_good_info_callcenter, R.id
