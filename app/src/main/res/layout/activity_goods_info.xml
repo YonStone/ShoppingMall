@@ -179,13 +179,15 @@
 
                 <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:fillViewport="true">
 
                     <WebView
                         android:id="@+id/wb_good_info_more"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </ScrollView>
+
             </com.youdu.shoppingmall.home.view.ScrollViewContainer>
         </LinearLayout>
 

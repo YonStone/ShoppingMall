@@ -3,9 +3,11 @@ package com.youdu.shoppingmall.app;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,15 +15,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.youdu.shoppingmall.R;
+import com.youdu.shoppingmall.base.BaseActivity;
 import com.youdu.shoppingmall.home.bean.GoodsBean;
+import com.youdu.shoppingmall.network.http.HttpConstants;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class GoodsInfoActivity extends AppCompatActivity {
+public class GoodsInfoActivity extends BaseActivity {
 
     @Bind(R.id.ib_good_info_back)
     ImageButton ibGoodInfoBack;
@@ -63,8 +66,6 @@ public class GoodsInfoActivity extends AppCompatActivity {
     LinearLayout llRoot;
 
     public static final String GOODS_BEAN = "goods_bean";
-
-    //    private List<GoodsBean> goodsBeans;
     private GoodsBean goodsBean;
 
     public static Intent actionView(Context context, GoodsBean bean) {
@@ -80,8 +81,7 @@ public class GoodsInfoActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         goodsBean = (GoodsBean) getIntent().getSerializableExtra(GOODS_BEAN);
         if (goodsBean != null) {
-            Gson gson = new Gson();
-            Toast.makeText(this, "" + gson.toJson(goodsBean), Toast.LENGTH_SHORT).show();
+            setDataFormView(goodsBean);
         }
     }
 
@@ -123,6 +123,41 @@ public class GoodsInfoActivity extends AppCompatActivity {
                 Toast.makeText(GoodsInfoActivity.this, "添加购物车", Toast.LENGTH_SHORT).show();
                 break;
             default:
+        }
+    }
+
+    public void setDataFormView(GoodsBean bean) {
+        String name = goodsBean.getName();
+        String cover_price = goodsBean.getCover_price();
+        String figure = goodsBean.getFigure();
+        String product_id = goodsBean.getProduct_id();
+        mImageLoader.displayImage(ivGoodInfoImage, HttpConstants.Base_URl_IMAGE +
+                figure);
+        if (name != null) {
+            tvGoodInfoName.setText(name);
+        }
+        if (cover_price != null) {
+            tvGoodInfoPrice.setText("¥" + cover_price);
+        }
+        setWebView(product_id);
+    }
+
+    private void setWebView(String product_id) {
+        if (product_id != null) {
+            wbGoodInfoMore.loadUrl("http://www.atguigu.com");
+            //覆盖 WebView 默认使用第三方或系统默认浏览器打开网页的行为,使网页用 WebView 打开
+            wbGoodInfoMore.setWebViewClient(new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                    return true;
+                }
+            });
+            // 启用支持 javascript
+            WebSettings settings = wbGoodInfoMore.getSettings();
+            settings.setJavaScriptEnabled(true);
+            settings.setUseWideViewPort(true);
+            // 优先使用缓存
+            wbGoodInfoMore.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         }
     }
 }
