@@ -87,9 +87,6 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
 
     private final LayoutInflater mLayoutInflater;
     private ImageLoaderManager mImageLoader;
-    private TextView tv_time_seckill;
-    private TextView tv_more_seckill;
-    private RecyclerView rv_seckill;
 
     public HomeRecyclerAdapter(Context context, ResultBean resultBean) {
         mContext = context;
@@ -116,10 +113,11 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
         } else if (i == RECOMMEND) {
             View view = mLayoutInflater.inflate(R.layout.item_recommend, null);
             return new RecommendHolder(view);
-        } else {
-            View itemView = mLayoutInflater.inflate(R.layout.itme_banner, null);
-            return new BannerViewHolder(itemView, resultBean);
+        } else if (i == HOT) {
+            View view = mLayoutInflater.inflate(R.layout.item_hot, null);
+            return new HotHolder(view);
         }
+        return null;
     }
 
     @Override
@@ -139,6 +137,9 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
         } else if (getItemViewType(i) == RECOMMEND) {
             RecommendHolder recommendHolder = (RecommendHolder) holder;
             recommendHolder.setData(resultBean.getRecommend_info());
+        } else if (getItemViewType(i) == HOT) {
+            HotHolder hotHolder = (HotHolder) holder;
+            hotHolder.setData(resultBean.getHot_info());
         }
     }
 
@@ -178,6 +179,29 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return 6;
+    }
+
+    class HotHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.tv_more_hot)
+        TextView tvMoreHot;
+        @Bind(R.id.gv_hot)
+        GridView gvHot;
+
+        public HotHolder(@NonNull View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+
+        public void setData(final List<ResultBean.HotInfoBean> data) {
+            HotViewAdapter adapter = new HotViewAdapter(mContext, data);
+            gvHot.setAdapter(adapter);
+            gvHot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                }
+            });
+        }
     }
 
     class RecommendHolder extends RecyclerView.ViewHolder {
