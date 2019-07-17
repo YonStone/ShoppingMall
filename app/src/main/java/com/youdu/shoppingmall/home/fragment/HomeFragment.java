@@ -54,15 +54,8 @@ public class HomeFragment extends BaseFragment {
             public void onSuccess(Object responseObj) {
                 Log.e(TAG, "onSuccess: " + responseObj.toString());
                 resultBean = ((ResultBeanData) responseObj).getResult();
-//
-//                Toast.makeText(mContext, "" + resultBean.getHot_info().get(0).getName(), Toast
-//                        .LENGTH_SHORT).show();
-
-
                 if (resultBean != null) {
                     rvHome.setLayoutManager(new LinearLayoutManager(getActivity()));
-//                    TestAdapter adapter = new TestAdapter(getActivity());
-//                    rvHome.setAdapter(adapter);
                     adapter = new HomeRecyclerAdapter(getActivity(), resultBean);
                     rvHome.setAdapter(adapter);
 //                    GridLayoutManager manager = new GridLayoutManager(getActivity(), 1);

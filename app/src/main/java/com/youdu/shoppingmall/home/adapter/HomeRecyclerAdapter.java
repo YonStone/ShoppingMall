@@ -1,6 +1,8 @@
 package com.youdu.shoppingmall.home.adapter;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -26,7 +28,9 @@ import com.youth.banner.listener.OnLoadImageListener;
 import com.zhy.magicviewpager.transformer.AlphaPageTransformer;
 import com.zhy.magicviewpager.transformer.ScaleInTransformer;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -41,12 +45,6 @@ import static com.youdu.shoppingmall.home.bean.ResultBeanData.ResultBean;
  */
 public class HomeRecyclerAdapter extends RecyclerView.Adapter {
     public static final String GOODS_BEAN = "goods_bean";
-    @Bind(R.id.tv_time_seckill)
-    TextView tvTimeSeckill;
-    @Bind(R.id.tv_more_seckill)
-    TextView tvMoreSeckill;
-    @Bind(R.id.rv_seckill)
-    RecyclerView rvSeckill;
     /**
      * 上下文
      */
@@ -176,6 +174,26 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
         return 6;
     }
 
+    private boolean isFirst = true;
+    private int dt;
+    private TextView tvTime;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                dt = dt - 1000;
+                SimpleDateFormat sd = new SimpleDateFormat("HH:mm:ss");
+                tvTime.setText(sd.format(new Date(dt)));
+
+                handler.removeMessages(0);
+                handler.sendEmptyMessageDelayed(0, 1000);
+                if (dt == 0) {
+                    handler.removeMessages(0);
+                }
+            }
+
+        }
+    };
 
     class SeckillHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.tv_time_seckill)
@@ -188,14 +206,23 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
         public SeckillHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+            tvTime = itemView.findViewById(R.id.tv_time_seckill);
         }
 
         public void setData(final ResultBean.SeckillInfoBean data) {
+            //设置时间
+            if (isFirst) {
+                dt = (Integer.parseInt(data.getEnd_time()) -
+                        (Integer.parseInt(data.getStart_time())));
+                isFirst = false;
+            }
             //设置水平列表
             rvSeckill.setLayoutManager(new LinearLayoutManager(mContext,
                     LinearLayoutManager.HORIZONTAL, false));
             SeckillAdapter adapter = new SeckillAdapter(mContext, data);
             rvSeckill.setAdapter(adapter);
+            //倒计时
+            handler.sendEmptyMessageDelayed(0, 1000);
             adapter.setOnSeckillRecyclerView(new SeckillAdapter.OnSeckillRecyclerView() {
                 @Override
                 public void onItemClick(int position) {
