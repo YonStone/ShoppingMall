@@ -2,6 +2,8 @@ package com.youdu.shoppingmall.home.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,8 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerClickListener;
 import com.youth.banner.listener.OnLoadImageListener;
+import com.zhy.magicviewpager.transformer.AlphaPageTransformer;
+import com.zhy.magicviewpager.transformer.ScaleInTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,11 +90,14 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         if (i == BANNER) {
-            View itemView = mLayoutInflater.inflate(R.layout.itme_banner, null);
-            return new BannerViewHolder(itemView, resultBean);
+            View view = mLayoutInflater.inflate(R.layout.itme_banner, null);
+            return new BannerViewHolder(view, resultBean);
         } else if (i == CHANNEL) {
-            View itemView = mLayoutInflater.inflate(R.layout.item_channel, null);
-            return new ChanelViewHolder(itemView);
+            View view = mLayoutInflater.inflate(R.layout.item_channel, null);
+            return new ChanelViewHolder(view);
+        } else if (i == ACT) {
+            View view = mLayoutInflater.inflate(R.layout.item_act, null);
+            return new ActViewHolder(view);
         } else {
             View itemView = mLayoutInflater.inflate(R.layout.itme_banner, null);
             return new BannerViewHolder(itemView, resultBean);
@@ -105,6 +112,9 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
         } else if (getItemViewType(i) == CHANNEL) {
             ChanelViewHolder chanelHolder = (ChanelViewHolder) holder;
             chanelHolder.setData(resultBean.getChannel_info());
+        } else if (getItemViewType(i) == ACT) {
+            ActViewHolder actHolder = (ActViewHolder) holder;
+            actHolder.setData(resultBean.getAct_info());
         }
     }
 
@@ -144,6 +154,65 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return 6;
+    }
+
+    class ActViewHolder extends RecyclerView.ViewHolder {
+        private ViewPager actViewPager;
+
+        public ActViewHolder(@NonNull View itemView) {
+            super(itemView);
+            actViewPager = itemView.findViewById(R.id.act_viewpager);
+        }
+
+        public void setData(final List<ResultBean.ActInfoBean> data) {
+            actViewPager.setPageMargin(20);
+            actViewPager.setOffscreenPageLimit(3);
+            actViewPager.setPageTransformer(true,
+                    new AlphaPageTransformer(new ScaleInTransformer()));
+            actViewPager.setAdapter(new PagerAdapter() {
+                @Override
+                public int getCount() {
+                    return data.size();
+                }
+
+                @Override
+                public boolean isViewFromObject(View view, Object object) {
+                    return view == object;
+                }
+
+                @Override
+                public Object instantiateItem(ViewGroup container, int position) {
+                    ImageView view = new ImageView(mContext);
+                    view.setScaleType(ImageView.ScaleType.FIT_XY);
+                    //绑定数据
+                    mImageLoader.displayImage(view, HttpConstants.Base_URl_IMAGE
+                            + data.get(position).getIcon_url());
+                    container.addView(view);
+                    return view;
+                }
+
+                @Override
+                public void destroyItem(ViewGroup container, int position, Object object) {
+                    container.removeView((View) object);
+                }
+            });
+            actViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int i, float v, int i1) {
+
+                }
+
+                @Override
+                public void onPageSelected(int i) {
+                    Toast.makeText(mContext, "position:" + i, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int i) {
+
+                }
+            });
+        }
     }
 
     class ChanelViewHolder extends RecyclerView.ViewHolder {
