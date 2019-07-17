@@ -1,6 +1,7 @@
 package com.youdu.shoppingmall.home.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.youdu.shoppingmall.R;
+import com.youdu.shoppingmall.app.GoodsInfoActivity;
 import com.youdu.shoppingmall.network.http.HttpConstants;
 import com.youdu.yonstone_sdk.imageloader.ImageLoaderManager;
 import com.youth.banner.Banner;
@@ -93,6 +95,14 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
         this.resultBean = resultBean;
         mLayoutInflater = LayoutInflater.from(mContext);
         mImageLoader = ImageLoaderManager.getInstance(mContext);
+    }
+
+    /**
+     * 启动商品信息列表
+     */
+    private void startGoodsInfoActivity() {
+        Intent intent = new Intent(mContext, GoodsInfoActivity.class);
+        mContext.startActivity(intent);
     }
 
     @NonNull
@@ -198,7 +208,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
             gvHot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                    startGoodsInfoActivity();
                 }
             });
         }
@@ -221,7 +231,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
             gvRecommend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Toast.makeText(mContext, "" + i, Toast.LENGTH_SHORT).show();
+                    startGoodsInfoActivity();
                 }
             });
         }
@@ -285,7 +295,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
             adapter.setOnSeckillRecyclerView(new SeckillAdapter.OnSeckillRecyclerView() {
                 @Override
                 public void onItemClick(int position) {
-                    Toast.makeText(mContext, "position:" + position, Toast.LENGTH_SHORT).show();
+                    startGoodsInfoActivity();
                 }
             });
         }
@@ -323,28 +333,19 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
                     mImageLoader.displayImage(view, HttpConstants.Base_URl_IMAGE
                             + data.get(position).getIcon_url());
                     container.addView(view);
+
+                    view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startGoodsInfoActivity();
+                        }
+                    });
                     return view;
                 }
 
                 @Override
                 public void destroyItem(ViewGroup container, int position, Object object) {
                     container.removeView((View) object);
-                }
-            });
-            actViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(int i, float v, int i1) {
-
-                }
-
-                @Override
-                public void onPageSelected(int i) {
-                    Toast.makeText(mContext, "position:" + i, Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int i) {
-
                 }
             });
         }
@@ -400,7 +401,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
             banner.setOnBannerClickListener(new OnBannerClickListener() {
                 @Override
                 public void OnBannerClick(int position) {
-                    Toast.makeText(mContext, "点击了" + position, Toast.LENGTH_SHORT).show();
+                    startGoodsInfoActivity();
                 }
             });
         }
