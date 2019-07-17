@@ -8,7 +8,7 @@ package com.youdu.shoppingmall.network.http;
 public class HttpConstants {
 
     // 请求图片基本 URL
-    public static final String Base_URl_IMAGE = "http://atguigu.com/img/";
+    public static final String Base_URl_IMAGE = "http://atguigu.com/img";
     // 请求 Json 数据基本 URL
     public static final String Base_URL_JSON = "http://atguigu.com/api/";
 

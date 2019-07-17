@@ -1,6 +1,5 @@
 package com.youdu.shoppingmall.home.fragment;
 
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -61,9 +60,27 @@ public class HomeFragment extends BaseFragment {
 
 
                 if (resultBean != null) {
-                    adapter = new HomeRecyclerAdapter(mContext, resultBean);
+                    rvHome.setLayoutManager(new LinearLayoutManager(getActivity()));
+//                    TestAdapter adapter = new TestAdapter(getActivity());
+//                    rvHome.setAdapter(adapter);
+                    adapter = new HomeRecyclerAdapter(getActivity(), resultBean);
                     rvHome.setAdapter(adapter);
 //                    GridLayoutManager manager = new GridLayoutManager(getActivity(), 1);
+
+                    //设置滑动到哪个位置了的监听
+//                    manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+//                        @Override
+//                        public int getSpanSize(int position) {
+//                            if (position <= 3) {
+//                                ib_top.setVisibility(View.GONE);
+//                            } else {
+//                                ib_top.setVisibility(View.VISIBLE);
+//                            }
+//                            return 1;
+//                        }
+//                    });
+                    //设置网格布局
+//                    rvHome.setLayoutManager(manager);
                 } else {
 
                 }

@@ -1,1 +1,1 @@
-include ':app','yonstone-sdk'
+include ':app','yonstone-sdk',":banner"

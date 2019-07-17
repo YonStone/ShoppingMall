@@ -7,11 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.youdu.shoppingmall.R;
 import com.youdu.shoppingmall.network.http.HttpConstants;
 import com.youdu.yonstone_sdk.imageloader.ImageLoaderManager;
-
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerClickListener;
+import com.youth.banner.listener.OnLoadImageListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,18 +76,19 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
     public HomeRecyclerAdapter(Context context, ResultBean resultBean) {
         mContext = context;
         this.resultBean = resultBean;
-        mLayoutInflater = LayoutInflater.from(context);
-        mImageLoader = ImageLoaderManager.getInstance(context);
+        mLayoutInflater = LayoutInflater.from(mContext);
+        mImageLoader = ImageLoaderManager.getInstance(mContext);
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        if (i == BANNER) {
-            View itemView = mLayoutInflater.inflate(R.layout.banner_viewpager, null);
-            return new BannerViewHolder(itemView, mContext, resultBean);
-        }
-        return null;
+//        if (i == BANNER) {
+        View itemView = mLayoutInflater.inflate(R.layout.banner_viewpager, null);
+        return new BannerViewHolder(itemView, mContext, resultBean);
+//        } else {
+//            return null;
+//        }
     }
 
     @Override
@@ -93,6 +99,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
         }
     }
 
+    /**
+     * 在item少且排版固定的情况,根据position来确定holder类型
+     * 当其他情况,应把type信息放在bean中
+     *
+     * @param position
+     * @return
+     */
     @Override
     public int getItemViewType(int position) {
         switch (position) {
@@ -126,60 +139,40 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
 
     class BannerViewHolder extends RecyclerView.ViewHolder {
         public Context mContext;
-//        public Banner banner;
+        public Banner banner;
         public ResultBean resultBean;
 
         public BannerViewHolder(@NonNull View itemView, Context context, ResultBean resultBean) {
             super(itemView);
-//            banner = itemView.findViewById(R.id.banner);
             this.mContext = context;
             this.resultBean = resultBean;
+
+            banner = itemView.findViewById(R.id.banner);
         }
 
         public void setData(final List<ResultBean.BannerInfoBean> bannerInfo) {
-            List<String> imageUris = new ArrayList<>();
-            for (int i = 0; i < resultBean.getBanner_info().size(); i++) {
-                imageUris.add(resultBean.getBanner_info().get(i).getImage());
+            final List<String> imageUris = new ArrayList<>();
+            for (int i = 0; i < bannerInfo.size(); i++) {
+                imageUris.add(bannerInfo.get(i).getImage());
             }
 
-//            banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
-//            // 设置类似手风琴动画
-//            banner.setBannerAnimation(Transformer.Accordion);
-//            // 设置加载图片
-//            banner.setImages(imageUris, new OnLoadImageListener() {
-//                @Override
-//                public void OnLoadImage(ImageView view, Object url) {
-//                    mImageLoader.displayImage(view, HttpConstants.Base_URl_IMAGE + url);
-//                }
-//            });
-//             设置点击事件
-//            banner.setOnBannerClickListener(new OnBannerClickListener()) {
-//                @Override
-//                public void OnBannerClick(int position) {
-//                    int realPosition = position - 1;
-//                    if (realPosition < bannerInfo.size()) {
-//                        String product_id = "";
-//                        String name = "";
-//                        String cover_price = "";
-//                        if (realPosition == 0) {
-//                            product_id = "627";
-//                            cover_price = "32.00";
-//                            name = "剑三 T 恤批发";
-//                        } else if (realPosition == 1) {
-//                            product_id = "21";
-//                            cover_price = "8.00";
-//                            name = "同人原创】剑网 3 剑侠情缘叁 Q 版成男 口袋 袋胸针 ";
-//                        } else {
-//                            product_id = "1341";
-//                            cover_price = "50.00";
-//                            name = "【蓝诺】《天下吾双》 剑网 3 同人本";
-//                        }
-//                        String image = bannerInfo.get(realPosition).getImage();
-////                        GoodsBean goodsBean = new GoodsBean(name, cover_price, image, product_id);
-//                    }
-//                }
-//            }
-
+            banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+            // 设置类似手风琴动画
+            banner.setBannerAnimation(Transformer.Accordion);
+            // 设置加载图片
+            banner.setImages(imageUris, new OnLoadImageListener() {
+                @Override
+                public void OnLoadImage(ImageView view, Object url) {
+                    mImageLoader.displayImage(view, HttpConstants.Base_URl_IMAGE + url);
+                }
+            });
+            //设置点击事件
+            banner.setOnBannerClickListener(new OnBannerClickListener() {
+                @Override
+                public void OnBannerClick(int position) {
+                    Toast.makeText(mContext, "点击了" + position, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }
