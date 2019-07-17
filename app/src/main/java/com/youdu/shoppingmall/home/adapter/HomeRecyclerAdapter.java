@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.youdu.shoppingmall.R;
@@ -27,6 +29,9 @@ import com.zhy.magicviewpager.transformer.ScaleInTransformer;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 import static com.youdu.shoppingmall.home.bean.ResultBeanData.ResultBean;
 
 /**
@@ -36,6 +41,12 @@ import static com.youdu.shoppingmall.home.bean.ResultBeanData.ResultBean;
  */
 public class HomeRecyclerAdapter extends RecyclerView.Adapter {
     public static final String GOODS_BEAN = "goods_bean";
+    @Bind(R.id.tv_time_seckill)
+    TextView tvTimeSeckill;
+    @Bind(R.id.tv_more_seckill)
+    TextView tvMoreSeckill;
+    @Bind(R.id.rv_seckill)
+    RecyclerView rvSeckill;
     /**
      * 上下文
      */
@@ -78,6 +89,9 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
 
     private final LayoutInflater mLayoutInflater;
     private ImageLoaderManager mImageLoader;
+    private TextView tv_time_seckill;
+    private TextView tv_more_seckill;
+    private RecyclerView rv_seckill;
 
     public HomeRecyclerAdapter(Context context, ResultBean resultBean) {
         mContext = context;
@@ -98,6 +112,9 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
         } else if (i == ACT) {
             View view = mLayoutInflater.inflate(R.layout.item_act, null);
             return new ActViewHolder(view);
+        } else if (i == SECKILL) {
+            View view = mLayoutInflater.inflate(R.layout.item_seckill, null);
+            return new SeckillHolder(view);
         } else {
             View itemView = mLayoutInflater.inflate(R.layout.itme_banner, null);
             return new BannerViewHolder(itemView, resultBean);
@@ -115,6 +132,9 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
         } else if (getItemViewType(i) == ACT) {
             ActViewHolder actHolder = (ActViewHolder) holder;
             actHolder.setData(resultBean.getAct_info());
+        } else if (getItemViewType(i) == SECKILL) {
+            SeckillHolder seckillHolder = (SeckillHolder) holder;
+            seckillHolder.setData(resultBean.getSeckill_info());
         }
     }
 
@@ -154,6 +174,35 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return 6;
+    }
+
+
+    class SeckillHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.tv_time_seckill)
+        TextView tvTimeSeckill;
+        @Bind(R.id.tv_more_seckill)
+        TextView tvMoreSeckill;
+        @Bind(R.id.rv_seckill)
+        RecyclerView rvSeckill;
+
+        public SeckillHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+
+        public void setData(final ResultBean.SeckillInfoBean data) {
+            //设置水平列表
+            rvSeckill.setLayoutManager(new LinearLayoutManager(mContext,
+                    LinearLayoutManager.HORIZONTAL, false));
+            SeckillAdapter adapter = new SeckillAdapter(mContext, data);
+            rvSeckill.setAdapter(adapter);
+            adapter.setOnSeckillRecyclerView(new SeckillAdapter.OnSeckillRecyclerView() {
+                @Override
+                public void onItemClick(int position) {
+                    Toast.makeText(mContext, "position:" + position, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     class ActViewHolder extends RecyclerView.ViewHolder {
