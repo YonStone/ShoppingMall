@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -83,12 +85,16 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-//        if (i == BANNER) {
-        View itemView = mLayoutInflater.inflate(R.layout.banner_viewpager, null);
-        return new BannerViewHolder(itemView, mContext, resultBean);
-//        } else {
-//            return null;
-//        }
+        if (i == BANNER) {
+            View itemView = mLayoutInflater.inflate(R.layout.itme_home_banner, null);
+            return new BannerViewHolder(itemView, resultBean);
+        } else if (i == CHANNEL) {
+            View itemView = mLayoutInflater.inflate(R.layout.item_home_channel, null);
+            return new ChanelViewHolder(itemView);
+        } else {
+            View itemView = mLayoutInflater.inflate(R.layout.itme_home_banner, null);
+            return new BannerViewHolder(itemView, resultBean);
+        }
     }
 
     @Override
@@ -96,6 +102,9 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
         if (getItemViewType(i) == BANNER) {
             BannerViewHolder bannerHolder = (BannerViewHolder) holder;
             bannerHolder.setData(resultBean.getBanner_info());
+        } else if (getItemViewType(i) == CHANNEL) {
+            ChanelViewHolder chanelHolder = (ChanelViewHolder) holder;
+            chanelHolder.setData(resultBean.getChannel_info());
         }
     }
 
@@ -137,14 +146,31 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
         return 6;
     }
 
+    class ChanelViewHolder extends RecyclerView.ViewHolder {
+        private GridView gvChannel;
+
+        public ChanelViewHolder(@NonNull View itemView) {
+            super(itemView);
+            gvChannel = itemView.findViewById(R.id.gv_channel);
+        }
+
+        public void setData(final List<ResultBean.ChannelInfoBean> channelBeans) {
+            gvChannel.setAdapter(new ChannelAdapter(mContext, channelBeans));
+            gvChannel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Toast.makeText(mContext, "" + i, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
     class BannerViewHolder extends RecyclerView.ViewHolder {
-        public Context mContext;
         public Banner banner;
         public ResultBean resultBean;
 
-        public BannerViewHolder(@NonNull View itemView, Context context, ResultBean resultBean) {
+        public BannerViewHolder(@NonNull View itemView, ResultBean resultBean) {
             super(itemView);
-            this.mContext = context;
             this.resultBean = resultBean;
 
             banner = itemView.findViewById(R.id.banner);
