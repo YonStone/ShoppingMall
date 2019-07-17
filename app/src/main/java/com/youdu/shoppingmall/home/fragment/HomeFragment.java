@@ -1,5 +1,6 @@
 package com.youdu.shoppingmall.home.fragment;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -58,22 +59,23 @@ public class HomeFragment extends BaseFragment {
                     rvHome.setLayoutManager(new LinearLayoutManager(getActivity()));
                     adapter = new HomeRecyclerAdapter(getActivity(), resultBean);
                     rvHome.setAdapter(adapter);
-//                    GridLayoutManager manager = new GridLayoutManager(getActivity(), 1);
 
+                    GridLayoutManager manager = new GridLayoutManager(getActivity(), 1);
                     //设置滑动到哪个位置了的监听
-//                    manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-//                        @Override
-//                        public int getSpanSize(int position) {
-//                            if (position <= 3) {
-//                                ib_top.setVisibility(View.GONE);
-//                            } else {
-//                                ib_top.setVisibility(View.VISIBLE);
-//                            }
-//                            return 1;
-//                        }
-//                    });
+                    manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                        @Override
+                        public int getSpanSize(int position) {
+                            if (position <= 3) {
+                                ibTop.setVisibility(View.GONE);
+                            } else {
+                                ibTop.setVisibility(View.VISIBLE);
+                            }
+                            //只能返回1
+                            return 1;
+                        }
+                    });
                     //设置网格布局
-//                    rvHome.setLayoutManager(manager);
+                    rvHome.setLayoutManager(manager);
                 } else {
 
                 }
