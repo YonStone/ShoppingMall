@@ -131,7 +131,7 @@ public class GoodsInfoActivity extends BaseActivity {
         String cover_price = goodsBean.getCover_price();
         String figure = goodsBean.getFigure();
         String product_id = goodsBean.getProduct_id();
-        mImageLoader.displayImage(ivGoodInfoImage, HttpConstants.Base_URl_IMAGE +
+        mImageLoader.displayImage(ivGoodInfoImage, HttpConstants.BASE_URl_IMAGE +
                 figure);
         if (name != null) {
             tvGoodInfoName.setText(name);

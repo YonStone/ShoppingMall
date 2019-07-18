@@ -74,7 +74,7 @@ public class SeckillAdapter extends RecyclerView.Adapter<SeckillAdapter.ViewHold
                     list.get(position);
             tvCoverPrice.setText("¥" + listBean.getCover_price());
             tvOriginPrice.setText("¥" + listBean.getOrigin_price());
-            imageLoader.displayImage(ivFigure, HttpConstants.Base_URl_IMAGE + listBean.getFigure());
+            imageLoader.displayImage(ivFigure, HttpConstants.BASE_URl_IMAGE + listBean.getFigure());
             llRoot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

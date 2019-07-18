@@ -62,7 +62,7 @@ public class ChannelAdapter extends BaseAdapter {
         ResultBean.ChannelInfoBean channelInfoBean = channelInfo.get(i);
         holder.tvChannel.setText(channelInfoBean.getChannel_name());
         imageLoader.displayImage(
-                holder.ivChannel, HttpConstants.Base_URl_IMAGE + channelInfoBean.getImage());
+                holder.ivChannel, HttpConstants.BASE_URl_IMAGE + channelInfoBean.getImage());
         return convertView;
     }
 

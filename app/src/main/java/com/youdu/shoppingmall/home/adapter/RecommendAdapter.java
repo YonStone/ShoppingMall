@@ -60,7 +60,7 @@ public class RecommendAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         ResultBean.RecommendInfoBean recommendInfoBean = data.get(i);
-        imageLoader.displayImage(holder.ivRecommend, HttpConstants.Base_URl_IMAGE +
+        imageLoader.displayImage(holder.ivRecommend, HttpConstants.BASE_URl_IMAGE +
                 recommendInfoBean.getFigure());
         holder.tvName.setText(recommendInfoBean.getName());
         holder.tvPrice.setText("¥" + recommendInfoBean.getCover_price());

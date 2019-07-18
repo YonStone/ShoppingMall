@@ -60,7 +60,7 @@ public class HotViewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         ResultBean.HotInfoBean hotInfoBean = data.get(position);
-        imageLoader.displayImage(holder.ivHot, HttpConstants.Base_URl_IMAGE +
+        imageLoader.displayImage(holder.ivHot, HttpConstants.BASE_URl_IMAGE +
                 hotInfoBean.getFigure());
         holder.tvName.setText(hotInfoBean.getName());
         holder.tvPrice.setText("¥" + hotInfoBean.getCover_price());
