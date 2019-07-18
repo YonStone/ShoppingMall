@@ -21,6 +21,7 @@ public class GoodsBean implements Serializable {
     private String name;
     private String origin_price;
     private String product_id;
+    private String url;
 
     public GoodsBean() {
     }
@@ -70,5 +71,13 @@ public class GoodsBean implements Serializable {
 
     public void setProduct_id(String product_id) {
         this.product_id = product_id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

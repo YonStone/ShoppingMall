@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.youdu.shoppingmall.R;
 import com.youdu.shoppingmall.app.GoodsInfoActivity;
+import com.youdu.shoppingmall.app.WebViewActivity;
 import com.youdu.shoppingmall.home.bean.GoodsBean;
 import com.youdu.shoppingmall.network.http.HttpConstants;
 import com.youdu.yonstone_sdk.imageloader.ImageLoaderManager;
@@ -342,7 +343,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
                 }
 
                 @Override
-                public Object instantiateItem(ViewGroup container, int position) {
+                public Object instantiateItem(ViewGroup container, final int position) {
                     ImageView view = new ImageView(mContext);
                     view.setScaleType(ImageView.ScaleType.FIT_XY);
                     //绑定数据
@@ -353,7 +354,9 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            //TODO 跳转到webView
+                            String url = data.get(position).getUrl();
+                            mContext.startActivity(WebViewActivity.actionView(mContext, url,
+                                    false));
                         }
                     });
                     return view;
@@ -417,7 +420,9 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
             banner.setOnBannerClickListener(new OnBannerClickListener() {
                 @Override
                 public void OnBannerClick(int position) {
-                    //TODO 跳转到webView
+                    ResultBean.BannerInfoBean infoBean = bannerInfo.get(position);
+                    String url = infoBean.getValue().getUrl();
+                    mContext.startActivity(WebViewActivity.actionView(mContext, url, true));
                 }
             });
         }
