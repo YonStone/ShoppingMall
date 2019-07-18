@@ -19,6 +19,7 @@ import com.youdu.shoppingmall.R;
 import com.youdu.shoppingmall.base.BaseActivity;
 import com.youdu.shoppingmall.home.bean.GoodsBean;
 import com.youdu.shoppingmall.network.http.HttpConstants;
+import com.youdu.shoppingmall.shoppingcart.utils.CartProvider;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -67,6 +68,7 @@ public class GoodsInfoActivity extends BaseActivity {
 
     public static final String GOODS_BEAN = "goods_bean";
     private GoodsBean goodsBean;
+    private CartProvider cartProvider;
 
     public static Intent actionView(Context context, GoodsBean bean) {
         Intent intent = new Intent(context, GoodsInfoActivity.class);
@@ -79,6 +81,9 @@ public class GoodsInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_info);
         ButterKnife.bind(this);
+
+        cartProvider = CartProvider.getInstance();
+        //取出传递来的GoodBean
         goodsBean = (GoodsBean) getIntent().getSerializableExtra(GOODS_BEAN);
         if (goodsBean != null) {
             setDataFormView(goodsBean);
@@ -120,7 +125,8 @@ public class GoodsInfoActivity extends BaseActivity {
                 Toast.makeText(GoodsInfoActivity.this, "购物车", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_good_info_addcart:
-                Toast.makeText(GoodsInfoActivity.this, "添加购物车", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "添加成功", Toast.LENGTH_SHORT).show();
+                cartProvider.addData(goodsBean);
                 break;
             default:
         }

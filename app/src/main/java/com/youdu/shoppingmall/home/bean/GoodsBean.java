@@ -22,6 +22,7 @@ public class GoodsBean implements Serializable {
     private String origin_price;
     private String product_id;
     private String url;
+    private int number;
 
     public GoodsBean() {
     }
@@ -79,5 +80,26 @@ public class GoodsBean implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    @Override
+    public String toString() {
+        return "GoodsBean{" +
+                "cover_price='" + cover_price + '\'' +
+                ", figure='" + figure + '\'' +
+                ", name='" + name + '\'' +
+                ", origin_price='" + origin_price + '\'' +
+                ", product_id='" + product_id + '\'' +
+                ", url='" + url + '\'' +
+                ", number=" + number +
+                '}';
     }
 }

@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.youdu.shoppingmall.base.BaseFragment;
+import com.youdu.shoppingmall.home.bean.GoodsBean;
+import com.youdu.shoppingmall.shoppingcart.utils.CartProvider;
+
+import java.util.List;
 
 /**
  * @author YonStone
@@ -31,5 +35,10 @@ public class ShoppingCartFragment extends BaseFragment {
         super.initData();
         Log.e(TAG, "购物车数据被初始化了");
         textView.setText("购物车");
+
+        List<GoodsBean> goodsBeans = CartProvider.getInstance().getAllData();
+        for (int i = 0; i < goodsBeans.size(); i++) {
+            Log.e(TAG, "initData: " + goodsBeans.get(i).toString());
+        }
     }
 }

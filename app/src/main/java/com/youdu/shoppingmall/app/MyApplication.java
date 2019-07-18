@@ -1,6 +1,7 @@
 package com.youdu.shoppingmall.app;
 
 import android.app.Application;
+import android.content.Context;
 
 /**
  * @author YonStone
@@ -9,15 +10,16 @@ import android.app.Application;
  */
 public class MyApplication extends Application {
 
-    private static MyApplication mApplication = null;
+    private static Context mContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mApplication = this;
+        mContext = this;
     }
 
-    public static MyApplication getInstance() {
-        return mApplication;
+    // 获取全局上下文
+    public static Context getContext() {
+        return mContext;
     }
 }
