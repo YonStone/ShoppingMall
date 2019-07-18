@@ -1,14 +1,25 @@
 package com.youdu.shoppingmall.shoppingcart.fragment;
 
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.youdu.shoppingmall.R;
 import com.youdu.shoppingmall.base.BaseFragment;
 import com.youdu.shoppingmall.home.bean.GoodsBean;
+import com.youdu.shoppingmall.shoppingcart.adapter.ShopCartAdapter;
 import com.youdu.shoppingmall.shoppingcart.utils.CartProvider;
 
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author YonStone
@@ -17,19 +28,96 @@ import java.util.List;
  */
 public class ShoppingCartFragment extends BaseFragment {
 
+    @Bind(R.id.tv_shopcart_edit)
+    TextView tvShopcartEdit;
+    @Bind(R.id.recyclerview)
+    RecyclerView recyclerview;
+    @Bind(R.id.checkbox_all)
+    CheckBox cbAll;
+    @Bind(R.id.tv_shopcart_total)
+    TextView tvShopcartTotal;
+    @Bind(R.id.btn_check_out)
+    Button btnCheckOut;
+    @Bind(R.id.ll_check_all)
+    LinearLayout llCheckAll;
+    @Bind(R.id.cb_all_cancel)
+    CheckBox cbAllCancel;
+    @Bind(R.id.btn_delete)
+    Button btnDelete;
+    @Bind(R.id.btn_collection)
+    Button btnCollection;
+    @Bind(R.id.ll_delete)
+    LinearLayout llDelete;
+    @Bind(R.id.iv_empty)
+    ImageView ivEmpty;
+    @Bind(R.id.tv_empty_cart_tobuy)
+    TextView tvEmptyCartTobuy;
+    @Bind(R.id.ll_empty_shopcart)
+    LinearLayout llEmptyShopcart;
+
+    /**
+     * 编辑状态
+     */
+    private static final int ACTION_EDIT = 0;
+    /**
+     * 完成状态
+     */
+    private static final int ACTION_COMPLETE = 1;
+    private ShopCartAdapter adapter;
+
     @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.fragment_shoppingcart, null);
+        ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
     protected void initData() {
         super.initData();
+        tvShopcartEdit.setTag(ACTION_EDIT);
+        tvShopcartEdit.setText("编辑");
+        llCheckAll.setVisibility(View.VISIBLE);
+        showData();
+    }
 
-        List<GoodsBean> goodsBeans = CartProvider.getInstance().getAllData();
-        for (int i = 0; i < goodsBeans.size(); i++) {
-            Log.e(TAG, "initData: " + goodsBeans.get(i).toString());
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    @OnClick({R.id.tv_shopcart_edit, R.id.btn_check_out, R.id.btn_delete, R.id.tv_empty_cart_tobuy})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_shopcart_edit:
+                break;
+            case R.id.btn_check_out:
+                break;
+            case R.id.btn_delete:
+                break;
+            //去逛逛
+            case R.id.tv_empty_cart_tobuy:
+                break;
         }
     }
+
+    private void showData() {
+        CartProvider cartProvider = CartProvider.getInstance();
+        List<GoodsBean> datas = cartProvider.getAllData();
+        if (datas != null && datas.size() > 0) {
+            tvShopcartEdit.setVisibility(View.VISIBLE);
+            llEmptyShopcart.setVisibility(View.GONE);
+
+            adapter = new ShopCartAdapter(mContext, datas, cartProvider,
+                    tvShopcartTotal, cbAll, cbAllCancel);
+            recyclerview.setLayoutManager(new LinearLayoutManager(mContext));
+            recyclerview.setAdapter(adapter);
+        } else {
+            // 显示空的
+            tvShopcartEdit.setVisibility(View.GONE);
+            llEmptyShopcart.setVisibility(View.VISIBLE);
+        }
+    }
+
 }

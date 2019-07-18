@@ -119,7 +119,7 @@ public class NumberAddSubView extends LinearLayout implements View.OnClickListen
             //减
             subNumber();
             if (onNumberChangeListener != null) {
-                onNumberChangeListener.subNumner(v, value);
+                onNumberChangeListener.subNumber(v, value);
             }
         }
     }
@@ -142,7 +142,7 @@ public class NumberAddSubView extends LinearLayout implements View.OnClickListen
         //当按钮被点击的时候回调
         void addNumber(View view, int value);
 
-        void subNumner(View view, int value);
+        void subNumber(View view, int value);
     }
 
     private OnNumberChangeListener onNumberChangeListener;

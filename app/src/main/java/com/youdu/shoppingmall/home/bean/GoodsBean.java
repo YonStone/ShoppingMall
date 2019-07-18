@@ -23,6 +23,10 @@ public class GoodsBean implements Serializable {
     private String product_id;
     private String url;
     private int number;
+    /**
+     * 是否被选中
+     */
+    private boolean isChildSelected;
 
     public GoodsBean() {
     }
@@ -88,6 +92,14 @@ public class GoodsBean implements Serializable {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public boolean isChildSelected() {
+        return isChildSelected;
+    }
+
+    public void setIsChildSelected(boolean childSelected) {
+        isChildSelected = childSelected;
     }
 
     @Override
