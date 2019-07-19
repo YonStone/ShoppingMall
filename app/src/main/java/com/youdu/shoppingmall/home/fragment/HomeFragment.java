@@ -50,7 +50,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initData() {
         super.initData();
-        RequestCenter.requestRecommendData(ResultBeanData.class, new DisposeDataListener() {
+        RequestCenter.requestHomeData(ResultBeanData.class, new DisposeDataListener() {
             @Override
             public void onSuccess(Object responseObj) {
                 Log.e(TAG, "onSuccess: " + responseObj.toString());

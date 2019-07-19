@@ -21,8 +21,13 @@ public class RequestCenter {
         );
     }
 
-    public static void requestRecommendData(Class<?> clazz, DisposeDataListener listener) {
+    public static void requestHomeData(Class<?> clazz, DisposeDataListener listener) {
         RequestCenter.postRequest(Constants.HOME_URL, null,
+                listener, clazz);
+    }
+
+    public static void requestTypeData(String url, Class<?> clazz, DisposeDataListener listener) {
+        RequestCenter.postRequest(url, null,
                 listener, clazz);
     }
 }
