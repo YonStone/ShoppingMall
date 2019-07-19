@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.youdu.shoppingmall.R;
 import com.youdu.shoppingmall.home.bean.GoodsBean;
-import com.youdu.shoppingmall.network.http.HttpConstants;
+import com.youdu.shoppingmall.network.http.Constants;
 import com.youdu.shoppingmall.shoppingcart.utils.CartProvider;
 import com.youdu.shoppingmall.shoppingcart.view.NumberAddSubView;
 import com.youdu.yonstone_sdk.imageloader.ImageLoaderManager;
@@ -186,7 +186,7 @@ public class ShopCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public void setData(final GoodsBean goodsBean) {
             cbGov.setChecked(goodsBean.isChildSelected());
-            imageLoader.displayImage(ivGov, HttpConstants.BASE_URl_IMAGE + goodsBean.getFigure());
+            imageLoader.displayImage(ivGov, Constants.BASE_URl_IMAGE + goodsBean.getFigure());
             tvDescGov.setText(goodsBean.getName());
             tvPriceGov.setText("￥" + goodsBean.getCover_price());
 

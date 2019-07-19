@@ -59,7 +59,6 @@ public class UserFragment extends BaseFragment {
     ImageButton ibUserSetting;
     @Bind(R.id.ib_user_message)
     ImageButton ibUserMessage;
-    private TextView textView;
 
     @Override
     protected View initView() {

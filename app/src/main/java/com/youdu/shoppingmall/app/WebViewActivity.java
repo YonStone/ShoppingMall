@@ -10,7 +10,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.youdu.shoppingmall.R;
-import com.youdu.shoppingmall.network.http.HttpConstants;
+import com.youdu.shoppingmall.network.http.Constants;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,8 +43,8 @@ public class WebViewActivity extends AppCompatActivity {
 
     private void setWebView(String url) {
         if (url != null) {
-            wbInfo.loadUrl(isBanner ? HttpConstants.BASE_URL_JSON + url :
-                    HttpConstants.BASE_URl_IMAGE + url);
+            wbInfo.loadUrl(isBanner ? Constants.BASE_URL_JSON + url :
+                    Constants.BASE_URl_IMAGE + url);
             //覆盖 WebView 默认使用第三方或系统默认浏览器打开网页的行为,使网页用 WebView 打开
             wbInfo.setWebViewClient(new WebViewClient() {
                 @Override

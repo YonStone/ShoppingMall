@@ -22,7 +22,7 @@ public class RequestCenter {
     }
 
     public static void requestRecommendData(Class<?> clazz, DisposeDataListener listener) {
-        RequestCenter.postRequest(HttpConstants.HOME_URL, null,
+        RequestCenter.postRequest(Constants.HOME_URL, null,
                 listener, clazz);
     }
 }

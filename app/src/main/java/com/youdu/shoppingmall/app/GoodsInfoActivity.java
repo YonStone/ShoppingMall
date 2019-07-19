@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.youdu.shoppingmall.R;
 import com.youdu.shoppingmall.base.BaseActivity;
 import com.youdu.shoppingmall.home.bean.GoodsBean;
-import com.youdu.shoppingmall.network.http.HttpConstants;
+import com.youdu.shoppingmall.network.http.Constants;
 import com.youdu.shoppingmall.shoppingcart.utils.CartProvider;
 
 import butterknife.Bind;
@@ -137,7 +137,7 @@ public class GoodsInfoActivity extends BaseActivity {
         String cover_price = goodsBean.getCover_price();
         String figure = goodsBean.getFigure();
         String product_id = goodsBean.getProduct_id();
-        mImageLoader.displayImage(ivGoodInfoImage, HttpConstants.BASE_URl_IMAGE +
+        mImageLoader.displayImage(ivGoodInfoImage, Constants.BASE_URl_IMAGE +
                 figure);
         if (name != null) {
             tvGoodInfoName.setText(name);

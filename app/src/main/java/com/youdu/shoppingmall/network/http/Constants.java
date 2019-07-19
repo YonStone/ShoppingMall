@@ -5,7 +5,7 @@ package com.youdu.shoppingmall.network.http;
  * @date 2019/07/02
  * @description 定义所有请求地址
  */
-public class HttpConstants {
+public class Constants {
 
     // 请求Json数据基本URL
     public static final String BASE_URL_JSON = "http://atguigu.com/api/";

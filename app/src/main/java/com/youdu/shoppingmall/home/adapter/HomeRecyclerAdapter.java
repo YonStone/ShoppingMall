@@ -21,7 +21,7 @@ import com.youdu.shoppingmall.R;
 import com.youdu.shoppingmall.app.GoodsInfoActivity;
 import com.youdu.shoppingmall.app.WebViewActivity;
 import com.youdu.shoppingmall.home.bean.GoodsBean;
-import com.youdu.shoppingmall.network.http.HttpConstants;
+import com.youdu.shoppingmall.network.http.Constants;
 import com.youdu.yonstone_sdk.imageloader.ImageLoaderManager;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -347,7 +347,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
                     ImageView view = new ImageView(mContext);
                     view.setScaleType(ImageView.ScaleType.FIT_XY);
                     //绑定数据
-                    mImageLoader.displayImage(view, HttpConstants.BASE_URl_IMAGE
+                    mImageLoader.displayImage(view, Constants.BASE_URl_IMAGE
                             + data.get(position).getIcon_url());
                     container.addView(view);
 
@@ -413,7 +413,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter {
             banner.setImages(imageUris, new OnLoadImageListener() {
                 @Override
                 public void OnLoadImage(ImageView view, Object url) {
-                    mImageLoader.displayImage(view, HttpConstants.BASE_URl_IMAGE + url);
+                    mImageLoader.displayImage(view, Constants.BASE_URl_IMAGE + url);
                 }
             });
             //设置点击事件

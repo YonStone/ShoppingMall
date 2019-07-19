@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.youdu.shoppingmall.R;
 import com.youdu.shoppingmall.home.bean.ResultBeanData.ResultBean;
-import com.youdu.shoppingmall.network.http.HttpConstants;
+import com.youdu.shoppingmall.network.http.Constants;
 import com.youdu.yonstone_sdk.imageloader.ImageLoaderManager;
 
 import java.util.List;
@@ -74,7 +74,7 @@ public class SeckillAdapter extends RecyclerView.Adapter<SeckillAdapter.ViewHold
                     list.get(position);
             tvCoverPrice.setText("¥" + listBean.getCover_price());
             tvOriginPrice.setText("¥" + listBean.getOrigin_price());
-            imageLoader.displayImage(ivFigure, HttpConstants.BASE_URl_IMAGE + listBean.getFigure());
+            imageLoader.displayImage(ivFigure, Constants.BASE_URl_IMAGE + listBean.getFigure());
             llRoot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

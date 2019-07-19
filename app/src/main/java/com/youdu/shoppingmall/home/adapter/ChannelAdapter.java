@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.youdu.shoppingmall.R;
-import com.youdu.shoppingmall.network.http.HttpConstants;
+import com.youdu.shoppingmall.network.http.Constants;
 import com.youdu.yonstone_sdk.imageloader.ImageLoaderManager;
 
 import java.util.List;
@@ -62,7 +62,7 @@ public class ChannelAdapter extends BaseAdapter {
         ResultBean.ChannelInfoBean channelInfoBean = channelInfo.get(i);
         holder.tvChannel.setText(channelInfoBean.getChannel_name());
         imageLoader.displayImage(
-                holder.ivChannel, HttpConstants.BASE_URl_IMAGE + channelInfoBean.getImage());
+                holder.ivChannel, Constants.BASE_URl_IMAGE + channelInfoBean.getImage());
         return convertView;
     }
 

@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.youdu.shoppingmall.R;
-import com.youdu.shoppingmall.network.http.HttpConstants;
+import com.youdu.shoppingmall.network.http.Constants;
 import com.youdu.yonstone_sdk.imageloader.ImageLoaderManager;
 
 import java.util.List;
@@ -60,7 +60,7 @@ public class RecommendAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         ResultBean.RecommendInfoBean recommendInfoBean = data.get(i);
-        imageLoader.displayImage(holder.ivRecommend, HttpConstants.BASE_URl_IMAGE +
+        imageLoader.displayImage(holder.ivRecommend, Constants.BASE_URl_IMAGE +
                 recommendInfoBean.getFigure());
         holder.tvName.setText(recommendInfoBean.getName());
         holder.tvPrice.setText("¥" + recommendInfoBean.getCover_price());
