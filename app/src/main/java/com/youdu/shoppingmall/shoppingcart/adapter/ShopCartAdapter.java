@@ -103,7 +103,7 @@ public class ShopCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     /**
-     * 设置是否全选
+     * 点击单个按钮时,检索设置所有item和另一个按钮选中状态
      *
      * @param checked
      */
@@ -112,15 +112,17 @@ public class ShopCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             for (int i = 0; i < datas.size(); i++) {
                 datas.get(i).setIsChildSelected(checked);
                 checkAll.setChecked(checked);
+                checkAllCancel.setChecked(checked);
                 notifyItemChanged(i);
             }
         } else {
             checkAll.setChecked(false);
+            checkAllCancel.setChecked(false);
         }
     }
 
     /**
-     * 判断是否全选
+     * 点击item时,检索设置两个按钮是否被选中
      */
     public void checkAll() {
         if (datas != null && datas.size() > 0) {

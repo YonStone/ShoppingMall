@@ -118,8 +118,9 @@ public class ShoppingCartFragment extends BaseFragment {
                 break;
             //去逛逛
             case R.id.tv_empty_cart_tobuy:
-                Intent intent = new Intent(mContext, MainActivity.class);
-                startActivity(intent);
+                //TODO:调到homefragment
+//                Intent intent = new Intent(mContext, MainActivity.class);
+//                startActivity(intent);
                 break;
             default:
         }
@@ -156,28 +157,31 @@ public class ShoppingCartFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 删除页默认就是不选中
+     */
     private void showDelete() {
         tvShopcartEdit.setText("完成");
         tvShopcartEdit.setTag(ACTION_COMPLETE);
 
         adapter.checkAll_none(false);
-        cbAll.setChecked(false);
-        cbAllCancel.setChecked(false);
 
         llDelete.setVisibility(View.VISIBLE);
         llCheckAll.setVisibility(View.GONE);
-
         adapter.showTotalPrice();
     }
 
+    /**
+     * 结算页默认就是选中
+     */
     private void hideDelete() {
         tvShopcartEdit.setText("编辑");
         tvShopcartEdit.setTag(ACTION_EDIT);
 
         adapter.checkAll_none(true);
+
         llDelete.setVisibility(View.GONE);
         llCheckAll.setVisibility(View.VISIBLE);
-
         adapter.showTotalPrice();
     }
 }
