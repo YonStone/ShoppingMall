@@ -11,6 +11,7 @@ import com.youdu.shoppingmall.R;
 
 /**
  * Created by Administrator on 2016/10/3.
+ * 分类左边类型adapter
  */
 public class TypeLeftAdapter extends BaseAdapter {
     private Context mContext;
