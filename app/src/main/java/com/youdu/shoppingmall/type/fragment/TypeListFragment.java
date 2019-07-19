@@ -100,7 +100,7 @@ public class TypeListFragment extends BaseFragment {
 
             @Override
             public void onFailure(Object reasonObj) {
-                Toast.makeText(mContext, "请求失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "失败", Toast.LENGTH_SHORT).show();
             }
         });
     }

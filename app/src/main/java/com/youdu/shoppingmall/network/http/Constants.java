@@ -15,7 +15,10 @@ public class Constants {
     //主页Fragment路径
     public static final String HOME_URL = BASE_URL_JSON + "HOME_URL.json";
 
-
+    /**
+     * 分类Fragment
+     */
+    public static final String TAG_URL = BASE_URL_JSON + "TAG_URL.json";
     //小裙子
     public static final String SKIRT_URL = BASE_URL_JSON + "SKIRT_URL.json";
     //上衣
@@ -45,8 +48,6 @@ public class Constants {
 
 
 
-//    //分类Fragment里面的标签Fragment页面数据
-//    public static final String TAG_URL = BASE_URL_JSON + "TAG_URL.json";
 //
 //
 //    public static final String NEW_POST_URL = BASE_URL_JSON + "NEW_POST_URL.json";

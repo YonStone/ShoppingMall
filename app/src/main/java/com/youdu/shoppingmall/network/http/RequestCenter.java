@@ -30,4 +30,9 @@ public class RequestCenter {
         RequestCenter.postRequest(url, null,
                 listener, clazz);
     }
+
+    public static void requestTagData(Class<?> clazz, DisposeDataListener listener) {
+        RequestCenter.postRequest(Constants.TAG_URL, null,
+                listener, clazz);
+    }
 }

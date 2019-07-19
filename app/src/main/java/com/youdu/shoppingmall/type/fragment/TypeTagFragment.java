@@ -1,9 +1,18 @@
 package com.youdu.shoppingmall.type.fragment;
 
+import android.util.Log;
 import android.view.View;
+import android.widget.GridView;
 
+import com.google.gson.Gson;
 import com.youdu.shoppingmall.R;
 import com.youdu.shoppingmall.base.BaseFragment;
+import com.youdu.shoppingmall.network.http.RequestCenter;
+import com.youdu.shoppingmall.type.adapter.TagGridViewAdapter;
+import com.youdu.shoppingmall.type.bean.TagBean;
+import com.youdu.yonstone_sdk.okhttp.listener.DisposeDataListener;
+
+import java.util.List;
 
 /**
  * @author YonStone
@@ -12,71 +21,43 @@ import com.youdu.shoppingmall.base.BaseFragment;
  */
 public class TypeTagFragment extends BaseFragment {
 
-//    private GridView gv_tag;
-//    private TagGridViewAdapter adapter;
-//    private List<TagBean.ResultBean> result;
+    private GridView gv_tag;
+    private TagGridViewAdapter adapter;
+    private List<TagBean.ResultBean> result;
 
     @Override
     public View initView() {
         View view = View.inflate(mContext, R.layout.fragment_type_tag, null);
-//        gv_tag = (GridView) view.findViewById(R.id.gv_tag);
+        gv_tag = view.findViewById(R.id.gv_tag);
         return view;
     }
 
     @Override
     public void initData() {
-//        getDataFromNet();
+        getDataFromNet();
     }
 
-//
-//    public void getDataFromNet() {
-//        OkHttpUtils
-//                .get()
-//                .url(Constants.TAG_URL)
-//                .id(100)
-//                .build()
-//                .execute(new MyStringCallback());
-//    }
-//
-//    public class MyStringCallback extends StringCallback {
-//
-//
-//        @Override
-//        public void onBefore(Request request, int id) {
-//        }
-//
-//        @Override
-//        public void onAfter(int id) {
-//        }
-//
-//        @Override
-//        public void onError(Call call, Exception e, int id) {
-//            Log.e("TAG", "联网失败" + e.getMessage());
-//        }
-//
-//        @Override
-//        public void onResponse(String response, int id) {
-//
-//            switch (id) {
-//                case 100:
-////                    Toast.makeText(mContext, "http", Toast.LENGTH_SHORT).show();
-//                    if (response != null) {
-//                        processData(response);
-//                        adapter = new TagGridViewAdapter(mContext, result);
-//                        gv_tag.setAdapter(adapter);
-//                    }
-//                    break;
-//                case 101:
-//                    Toast.makeText(mContext, "https", Toast.LENGTH_SHORT).show();
-//                    break;
-//            }
-//        }
-//
-//    }
-//
-//    private void processData(String json) {
-//        Gson gson = new Gson();
-//        TagBean tagBean = gson.fromJson(json, TagBean.class);
-//        result = tagBean.getResult();
-//    }
+    private void processData(String json) {
+        Gson gson = new Gson();
+        TagBean tagBean = gson.fromJson(json, TagBean.class);
+        result = tagBean.getResult();
+    }
+
+    private void getDataFromNet() {
+        RequestCenter.requestTagData(null, new DisposeDataListener() {
+            @Override
+            public void onSuccess(Object response) {
+                if (response != null) {
+                    processData(response.toString());
+                    adapter = new TagGridViewAdapter(mContext, result);
+                    gv_tag.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Object reasonObj) {
+                Log.e(TAG, "联网失败" + reasonObj);
+            }
+        });
+    }
 }
