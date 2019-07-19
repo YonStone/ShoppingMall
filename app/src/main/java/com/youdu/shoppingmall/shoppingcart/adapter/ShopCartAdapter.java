@@ -102,6 +102,11 @@ public class ShopCartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return datas.size();
     }
 
+    /**
+     * 设置是否全选
+     *
+     * @param checked
+     */
     public void checkAll_none(boolean checked) {
         if (datas != null && datas.size() > 0) {
             for (int i = 0; i < datas.size(); i++) {

@@ -1,5 +1,6 @@
 package com.youdu.shoppingmall.shoppingcart.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.youdu.shoppingmall.R;
+import com.youdu.shoppingmall.app.MainActivity;
 import com.youdu.shoppingmall.base.BaseFragment;
 import com.youdu.shoppingmall.home.bean.GoodsBean;
 import com.youdu.shoppingmall.shoppingcart.adapter.ShopCartAdapter;
@@ -82,6 +84,12 @@ public class ShoppingCartFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        showData();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
@@ -91,14 +99,42 @@ public class ShoppingCartFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_shopcart_edit:
+                int tag = (int) tvShopcartEdit.getTag();
+                if (tag == ACTION_EDIT) {
+                    showDelete();
+                } else {
+                    hideDelete();
+                }
                 break;
+            //去结算
             case R.id.btn_check_out:
                 break;
             case R.id.btn_delete:
+                adapter.deleteData();
+                adapter.showTotalPrice();
+                //显示空空如也
+                checkShowEmpty();
+                adapter.checkAll();
                 break;
             //去逛逛
             case R.id.tv_empty_cart_tobuy:
+                Intent intent = new Intent(mContext, MainActivity.class);
+                startActivity(intent);
                 break;
+            default:
+        }
+    }
+
+    /**
+     * 是否显示空视图
+     */
+    private void checkShowEmpty() {
+        if (adapter != null && adapter.getItemCount() > 0) {
+            tvShopcartEdit.setVisibility(View.VISIBLE);
+            llEmptyShopcart.setVisibility(View.GONE);
+        } else {
+            llEmptyShopcart.setVisibility(View.VISIBLE);
+            tvShopcartEdit.setVisibility(View.GONE);
         }
     }
 
@@ -120,4 +156,28 @@ public class ShoppingCartFragment extends BaseFragment {
         }
     }
 
+    private void showDelete() {
+        tvShopcartEdit.setText("完成");
+        tvShopcartEdit.setTag(ACTION_COMPLETE);
+
+        adapter.checkAll_none(false);
+        cbAll.setChecked(false);
+        cbAllCancel.setChecked(false);
+
+        llDelete.setVisibility(View.VISIBLE);
+        llCheckAll.setVisibility(View.GONE);
+
+        adapter.showTotalPrice();
+    }
+
+    private void hideDelete() {
+        tvShopcartEdit.setText("编辑");
+        tvShopcartEdit.setTag(ACTION_EDIT);
+
+        adapter.checkAll_none(true);
+        llDelete.setVisibility(View.GONE);
+        llCheckAll.setVisibility(View.VISIBLE);
+
+        adapter.showTotalPrice();
+    }
 }
