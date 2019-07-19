@@ -1,11 +1,8 @@
 package com.youdu.shoppingmall.type.fragment;
 
-import android.graphics.Color;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.TextView;
 
+import com.youdu.shoppingmall.R;
 import com.youdu.shoppingmall.base.BaseFragment;
 
 /**
@@ -14,22 +11,15 @@ import com.youdu.shoppingmall.base.BaseFragment;
  * @description
  */
 public class TypeFragment extends BaseFragment {
-    private TextView textView;
 
     @Override
     protected View initView() {
-        Log.e(TAG, "分类视图被初始化了");
-        textView = new TextView(mContext);
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(25);
-        textView.setTextColor(Color.RED);
-        return textView;
+        View view = View.inflate(mContext, R.layout.fragment_type, null);
+        return view;
     }
 
     @Override
     protected void initData() {
         super.initData();
-        Log.e(TAG, "分类数据被初始化了");
-        textView.setText("分类");
     }
 }

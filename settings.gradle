@@ -1,1 +1,1 @@
-include ':app','yonstone-sdk',":banner"
+include ':app','yonstone-sdk',":banner",":FlycoTabLayout_Lib"
